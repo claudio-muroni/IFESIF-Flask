@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+{% extends "layout.html" %} {% block body %}
+    {% for pres in presidents %}
+        <p>
+            <a href="/pres?name={{pres}}">{{pres}}</a>
+        </p>
+    {% endfor %}
+{% endblock %}
