@@ -1,8 +1,24 @@
 <!DOCTYPE html>
 {% extends "layout.html" %} {% block body %}
-    {% for c in contracts %}
-        <p>
-            {{ c["giocatore"] }}
-        </p>
-    {% endfor %}
+    <table>
+        <tr>
+            <th>r</th>
+            <th>Giocatore</th>
+            <th>$0</th>
+            <th>$i</th>
+            <th>Stagione</th>
+            <th>n.</th>
+        </tr>
+        {% for c in contracts %}
+            <tr>
+                <td>{{ c["ruolo"] }}</td>
+                <td>{{ c["giocatore"] }}</td>
+                <td>{{ c["prezzo"] }}</td>
+                <td>{{ c["prezzo_rinnovo"] }}</td>
+                <td>{{ c["anno"] -1 }}/{{ c["anno"] }}</td>
+                <td>{{ c["durata"] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    
 {% endblock %}
