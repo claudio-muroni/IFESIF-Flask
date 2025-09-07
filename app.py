@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import requests
 import settings
+from operator import itemgetter
 
 app = Flask(__name__)
 
@@ -22,6 +23,8 @@ def pres():
     if response.status_code == 200:
         result = response.json()
         contracts = [c for c in result if c["cognome_presidente"] == pres]
+        contracts = sorted(contracts, key=itemgetter('ruolo'), reverse=True)
+        print(contracts)
         return render_template("president.html", contracts=contracts)
 
     return "Presidente"
