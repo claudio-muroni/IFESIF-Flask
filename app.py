@@ -21,10 +21,16 @@ def pres():
     pres = request.args.get("name")
 
     response = requests.get(settings.DB_URL+"/rest/v1/contratti?apikey="+settings.DB_KEY)
-    if response.status_code == 200:
+    response2 = requests.get(settings.DB_URL+"/rest/v1/presidenti?apikey="+settings.DB_KEY)
+    if response.status_code == 200 and response2.status_code == 200:
         result = response.json()
         contracts = [c for c in result if c["cognome_presidente"] == pres]
         contracts = sorted(contracts, key=itemgetter('ruolo'), reverse=True)
-        return render_template("president.html", contracts=contracts)
 
-    return "Presidente"
+        result2 = response2.json()
+        budget = [p for p in result2 if p["cognome"] == pres]
+        budget = budget[0]["cash"]
+
+        return render_template("president.html", contracts=contracts, pres=pres, budget=budget)
+
+    return "Presidente non disponibile"
