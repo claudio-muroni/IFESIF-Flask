@@ -34,3 +34,6 @@ def pres():
         return render_template("president.html", contracts=contracts, pres=pres, budget=budget)
 
     return "Presidente non disponibile"
+
+if __name__ == "__main__":
+    app.run()
