@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import requests
 from operator import itemgetter
+import time
 
 import settings
 
@@ -35,6 +36,20 @@ def pres():
         return render_template("president.html", contracts=contracts, surname=surname, name=name, budget=budget)
 
     return "Presidente non disponibile"
+
+# simple escamotage to avoid render downtime
+@app.route('/keep_alive')
+def ping():
+    settings.keep_alive = True
+    while settings.keep_alive:
+        time.sleep(60*10)
+        print("pong")
+    return "keep_alive = False"
+
+@app.route('/not_keep_alive')
+def stop_ping():
+    settings.keep_alive = False
+    return "keep_alive = False"
 
 if __name__ == "__main__":
     app.run()
