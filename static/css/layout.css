@@ -1,0 +1,10 @@
+.textCentered
+{
+    text-align:center;
+}
+
+.tableCentered
+{
+    margin-left: auto;
+    margin-right: auto;
+}
