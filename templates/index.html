@@ -2,7 +2,7 @@
 {% extends "layout.html" %} {% block body %}
     {% for pres in presidents %}
         <p class="textCentered">
-            <a href="/pres?name={{pres}}">{{pres}}</a>
+            <a href="/pres?surname={{pres[0]}}&name={{pres[1]}}">{{pres[0]}} {{pres[1]}}</a>
         </p>
     {% endfor %}
 {% endblock %}
