@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 {% extends "layout.html" %} {% block body %}
     {% for pres in presidents %}
-        <p>
+        <p class="textCentered">
             <a href="/pres?name={{pres}}">{{pres}}</a>
         </p>
     {% endfor %}
