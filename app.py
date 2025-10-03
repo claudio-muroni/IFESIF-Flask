@@ -37,19 +37,6 @@ def pres():
 
     return "Presidente non disponibile"
 
-# simple escamotage to avoid render downtime
-@app.route('/keep_alive')
-def ping():
-    settings.keep_alive = True
-    while settings.keep_alive:
-        time.sleep(3)
-        print("pong")
-    return "keep_alive = False"
-
-@app.route('/not_keep_alive')
-def stop_ping():
-    settings.keep_alive = False
-    return "keep_alive = False"
 
 if __name__ == "__main__":
     app.run()
