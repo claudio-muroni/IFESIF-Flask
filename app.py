@@ -42,7 +42,7 @@ def pres():
 def ping():
     settings.keep_alive = True
     while settings.keep_alive:
-        time.sleep(60*10)
+        time.sleep(3)
         print("pong")
     return "keep_alive = False"
 
