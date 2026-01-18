@@ -1,30 +1,34 @@
 <!DOCTYPE html>
 {% extends "layout.html" %} {% block body %}
-    <h1>{{surname}} {{name}}<br>Budget: {{budget}} cr.</h1>
+    <div class="titles">
+        <h1>{{surname}} {{name}}</h1>
+        <h2>Budget: {{budget}} cr.</h2>
+    </div>
 
-    <table>
-        <tr>
-            <th>r</th>
-            <th>Giocatore</th>
-            <th>$</th>
-            <th>$</th>
-            <th>Stagione</th>
-            <th>n.</th>
-        </tr>
-        {% for c in contracts %}
+    <div>
+        <table>
             <tr>
-                <td>{{ c["ruolo"] }}</td>
-                <td>{{ c["giocatore"] }}</td>
-                <td>{{ c["prezzo"] }}</td>
-                <td>{{ c["prezzo_rinnovo"] }}</td>
-                <td>{{ c["anno"] -1 }}/{{ c["anno"] }}</td>
-                <td>{{ c["durata"] }}</td>
+                <th>r</th>
+                <th>Giocatore</th>
+                <th>$</th>
+                <th>$</th>
+                <th>Stagione</th>
+                <th>n.</th>
             </tr>
-        {% endfor %}
-    </table>
+            {% for c in contracts %}
+                <tr>
+                    <td>{{ c["ruolo"] }}</td>
+                    <td>{{ c["giocatore"] }}</td>
+                    <td>{{ c["prezzo"] }}</td>
+                    <td>{{ c["prezzo_rinnovo"] }}</td>
+                    <td>{{ c["anno"] -1 }}/{{ c["anno"] }}</td>
+                    <td>{{ c["durata"] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 
     <footer>
-        <p></p>
         <a href="/">Home</a>
     </footer>
     

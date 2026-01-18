@@ -1,17 +1,52 @@
 body
 {
+  background-color: #050133;
   font-family: "Afacad", sans-serif;
+  color: white;
 }
 
-h1, h2, footer
+h1, h2, ul
 {
-    text-align:center;
+  margin: 0rem;
+}
+
+div
+{
+  margin-bottom: 3rem;
+}
+
+div.titles
+{
+  display: flex;
+  flex-direction: column;
+  text-align:center;
+  gap: 0rem;
+}
+
+div.presidents
+{
+  text-align:center;
+  gap: 0rem;
+}
+
+ul
+{
+  display: inline-block;
+  text-align: left;
+}
+
+a
+{
+  color: white;
 }
 
 table
 {
-    margin-left: auto;
-    margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-
+footer
+{
+  text-align:center;
+}
