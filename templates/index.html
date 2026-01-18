@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 {% extends "layout.html" %} {% block body %}
+
+    <h1>Il fanta è sempre il fanta</h1>
+    <h2>Since 2013</h2>
+
+    <p></p>
     {% for pres in presidents %}
-        <p class="textCentered">
+        <h1>
             <a href="/pres?surname={{pres[0]}}&name={{pres[1]}}">{{pres[0]}} {{pres[1]}}</a>
-        </p>
+        </h1>
     {% endfor %}
 {% endblock %}
