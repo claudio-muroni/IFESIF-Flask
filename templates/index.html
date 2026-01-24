@@ -7,7 +7,7 @@
     
     <div class="presidents">
         <h2>Seleziona un presidente:</h2>
-        <ul>
+        <ul class="presidents">
         {% for pres in presidents %}
             <li>
                 <h3><a href="/pres?surname={{pres[0]}}&name={{pres[1]}}">{{pres[0]}} {{pres[1]}}</a></h3>
