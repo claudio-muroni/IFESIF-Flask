@@ -2,6 +2,9 @@ body
 {
   background-image: url("sfondo_ifesif.png");
   background-color: #050133;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   font-family: "Afacad", sans-serif;
   font-size: xx-large;
   color: white;
