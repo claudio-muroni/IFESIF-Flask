@@ -6,7 +6,7 @@ body
   background-position: center center;
   background-repeat: repeat;
   font-family: "Afacad", sans-serif;
-  font-size: xx-large;
+  font-size: 2.25rem;
   color: white;
 }
 
@@ -38,13 +38,17 @@ ul.presidents
 {
   display: inline-block;
   text-align: left;
-  column-count: 2;
+  column-count: 4;
   column-gap: 3rem;
+  list-style-type: none;
+  list-style-position: outside;
+  padding: 0;
 }
 
 a
 {
   color: white;
+  text-decoration: none;
 }
 
 table

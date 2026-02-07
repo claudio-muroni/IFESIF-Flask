@@ -7,11 +7,14 @@ import settings
 
 app = Flask(__name__)
 
+presidents = []
+
 @app.route('/')
 def index():
     response = requests.get(settings.DB_URL+"/rest/v1/presidenti?apikey="+settings.DB_KEY)
     if response.status_code == 200:
             result = response.json()
+            global presidents
             presidents = [(p["cognome"],p["nome"]) for p in result if p["attivo"] == True]
             return render_template("index.html", presidents=presidents)
 
@@ -22,8 +25,16 @@ def pres():
     surname = request.args.get("surname")
     name = request.args.get("name")
 
+    global presidents
+    if presidents == []:
+        response = requests.get(settings.DB_URL+"/rest/v1/presidenti?apikey="+settings.DB_KEY)
+        if response.status_code == 200:
+            result = response.json()
+            presidents = [(p["cognome"],p["nome"]) for p in result if p["attivo"] == True]
+
     response = requests.get(settings.DB_URL+"/rest/v1/contratti?apikey="+settings.DB_KEY)
     response2 = requests.get(settings.DB_URL+"/rest/v1/presidenti?apikey="+settings.DB_KEY)
+
     if response.status_code == 200 and response2.status_code == 200:
         result = response.json()
         contracts = [c for c in result if c["cognome_presidente"] == surname and c["nome_presidente"] == name]
@@ -33,7 +44,7 @@ def pres():
         budget = [p for p in result2 if p["cognome"] == surname]
         budget = budget[0]["cash"]
 
-        return render_template("president.html", contracts=contracts, surname=surname, name=name, budget=budget)
+        return render_template("president.html", contracts=contracts, surname=surname, name=name, budget=budget, presidents=presidents)
 
     return "Presidente non disponibile"
 
