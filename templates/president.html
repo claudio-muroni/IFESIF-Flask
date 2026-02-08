@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 {% extends "layout.html" %} {% block body %}
     <div class="titles">
-        <h1>{{surname}} {{name}}</h1>
-        <h2>Budget: {{budget}} cr.</h2>
+        <h3>{{name}} {{surname}}</h3>
+        <h3>Budget: {{budget}} cr.</h3>
     </div>
 
     <div>
@@ -17,7 +17,9 @@
             </tr>
             {% for c in contracts %}
                 <tr>
-                    <td>{{ c["ruolo"] }}</td>
+                    <td class="{% if c['ruolo']=='P' %}P{% elif c['ruolo']=='D' %}D{% elif c['ruolo']=='C' %}C{% elif c['ruolo']=='A' %}A{% endif %}">
+                        {{ c["ruolo"] }}
+                    </td>
                     <td>{{ c["giocatore"] }}</td>
                     <td>{{ c["prezzo"] }}</td>
                     <td>{{ c["prezzo_rinnovo"] }}</td>
