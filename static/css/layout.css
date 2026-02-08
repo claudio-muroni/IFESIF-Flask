@@ -11,6 +11,7 @@ body
   width: 80%;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 5rem;
 }
 
 h1, h2, h3, ul
@@ -40,6 +41,8 @@ div.presidents, div.ifesif-video
 div.presidents
 {
   border: solid;
+  border-width: 0.25rem;
+  border-radius: 5rem;
 }
 
 ul.presidents
@@ -50,7 +53,8 @@ ul.presidents
   column-gap: 3rem;
   list-style-type: none;
   list-style-position: outside;
-  padding: 0;
+  padding: 0rem;
+  margin-bottom: 0.5rem;
 }
 
 a
