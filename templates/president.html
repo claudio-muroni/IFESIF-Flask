@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 {% extends "layout.html" %} {% block body %}
+    <div class="presidents">
+        <h3>Seleziona un altro presidente:</h3>
+        <ul class="presidents">
+        {% for pres in presidents %}
+            <li>
+                <p><a href="/pres?surname={{pres[0]}}&name={{pres[1]}}">{{pres[1][:3]}} {{pres[0][:1]}}.</a><p>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+
     <div class="titles">
-        <h3>{{name}} {{surname}}</h3>
+        <h2>{{name}} {{surname}}</h2>
         <h3>Budget: {{budget}} cr.</h3>
     </div>
 
