@@ -45,7 +45,7 @@ div.presidents
 {
   border: solid;
   border-width: 0.25rem;
-  border-radius: 5rem;
+  border-radius: 2rem;
 }
 
 ul.presidents
@@ -57,6 +57,7 @@ ul.presidents
   list-style-type: none;
   list-style-position: outside;
   padding: 0rem;
+  margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 }
 
