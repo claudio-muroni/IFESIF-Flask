@@ -15,6 +15,7 @@ def index():
             result = response.json()
             global presidents
             presidents = [(p["cognome"],p["nome"]) for p in result if p["attivo"] == True]
+            presidents = sorted(presidents, key=itemgetter(1))
             return render_template("index.html", presidents=presidents)
 
     return "IFESIF"
@@ -30,6 +31,7 @@ def pres():
         if response.status_code == 200:
             result = response.json()
             presidents = [(p["cognome"],p["nome"]) for p in result if p["attivo"] == True]
+            presidents = sorted(presidents, key=itemgetter(1))
 
     response = requests.get(settings.DB_URL+"/rest/v1/contratti?apikey="+settings.DB_KEY)
     response2 = requests.get(settings.DB_URL+"/rest/v1/presidenti?apikey="+settings.DB_KEY)
