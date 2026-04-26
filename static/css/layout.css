@@ -35,30 +35,39 @@ div.titles
   gap: 0rem;
 }
 
-div.presidents, div.ifesif-video
+div.presidents, div.ifesif-video, div.pages
 {
   text-align:center;
   gap: 0rem;
 }
 
-div.presidents
+div.presidents, div.pages
 {
   border: solid;
   border-width: 0.25rem;
   border-radius: 2rem;
 }
 
-ul.presidents
+ul.presidents, ul.pages
 {
   display: inline-block;
-  text-align: left;
-  column-count: 4;
+  text-align: center;
   column-gap: 3rem;
   list-style-type: none;
   list-style-position: outside;
   padding: 0rem;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+}
+
+ul.presidents
+{
+  column-count: 4;
+}
+
+ul.pages
+{
+  column-count: 3;
 }
 
 a
