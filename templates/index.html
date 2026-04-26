@@ -9,7 +9,7 @@
         <ul class="presidents">
         {% for pres in presidents %}
             <li>
-                <h3><a href="/pres?surname={{pres[0]}}&name={{pres[1]}}">{{pres[1][:3].upper()}} {{pres[0][:1]}}.</a></h3>
+                <h3><a href="/pres?surname={{pres[0]}}&name={{pres[1]}}">{{pres[1][:3]}} {{pres[0][:1]}}.</a></h3>
             </li>
         {% endfor %}
         </ul>
