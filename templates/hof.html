@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% extends "layout.html" %} {% block body %}
+
+    <div>
+        <table>
+            <tr>
+                <th>n.</th>
+                <th>Stagione</th>
+                <th>p.</th>
+                <th>Campionato</th>
+                <th>Coppa</th>
+            </tr>
+            {% for w in winners %}
+                <tr>
+                    <td>-</td>
+                    <td>{{ w["anno"] -1 }}/{{ w["anno"] }}</td>
+                    <td>-</td>
+                    <td>{{ w["competizione"] }}</td>
+                    <td>{{ w["competizione"] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}

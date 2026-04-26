@@ -60,6 +60,18 @@ def pres():
 
     return "Presidente non disponibile"
 
+@app.route('/hof')
+def hall_of_fame():
+
+    response = requests.get(settings.DB_URL+"/rest/v1/classifiche?apikey="+settings.DB_KEY)
+    if response.status_code == 200:
+        result = response.json()
+        winners = [c for c in result if c["posizione"] == 1]
+        winners = sorted(winners, key=itemgetter('anno'), reverse=True)
+
+    return render_template("hof.html", winners=winners)
+
+    return "Albo d'oro non disponibile"
 
 if __name__ == "__main__":
     app.run()
