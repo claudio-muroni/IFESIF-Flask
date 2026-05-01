@@ -6,17 +6,15 @@
             <tr>
                 <th>n.</th>
                 <th>Stagione</th>
-                <th>p.</th>
                 <th>Campionato</th>
                 <th>Coppa</th>
             </tr>
             {% for w in winners %}
                 <tr>
-                    <td>-</td>
-                    <td>{{ w["anno"] -1 }}/{{ w["anno"] }}</td>
-                    <td>-</td>
-                    <td>{{ w["competizione"] }}</td>
-                    <td>{{ w["competizione"] }}</td>
+                    <td>{{ w["n"] }}</td>
+                    <td>{{ w["Stagione"] }}</td>
+                    <td>{{ w["Campionato"] }}</td>
+                    <td>{{ w["Coppa"] }}</td>
                 </tr>
             {% endfor %}
         </table>

@@ -66,8 +66,25 @@ def hall_of_fame():
     response = requests.get(settings.DB_URL+"/rest/v1/classifiche?apikey="+settings.DB_KEY)
     if response.status_code == 200:
         result = response.json()
-        winners = [c for c in result if c["posizione"] == 1]
-        winners = sorted(winners, key=itemgetter('anno'), reverse=True)
+        
+        winners_league = [c for c in result if c["posizione"] == 1 and c["competizione"] == "Campionato"]
+        winners_cup = [c for c in result if c["posizione"] == 1 and c["competizione"] == "Coppa"]
+
+        winners_league = sorted(winners_league, key=itemgetter('anno'), reverse=True)
+        winners_cup = sorted(winners_cup, key=itemgetter('anno'), reverse=True)
+
+        winners = []
+        last_year = winners_league[0]["anno"]
+        first_year = winners_league[-1]["anno"]
+        for y in range(last_year, first_year-1, -1):
+            rec = {}
+            rec["n"] = y-first_year+1
+            rec["Stagione"] = str(y-1) + "/" + str(y)
+            rec["Campionato"] = next((w["nome_presidente"]+" "+w["cognome_presidente"][:1]+"." for w in winners_league if w["anno"] == y), "-")
+            rec["Coppa"] = next((w["nome_presidente"]+" "+w["cognome_presidente"][:1]+"." for w in winners_cup if w["anno"] == y), "-")
+            winners.append(rec)
+
+        print(winners)
 
     return render_template("hof.html", winners=winners)
 
