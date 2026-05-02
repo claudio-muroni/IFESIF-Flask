@@ -107,9 +107,7 @@ def hall_of_fame():
             rec["Coppa"] = next((w["nome_presidente"]+" "+w["cognome_presidente"][:1]+"." for w in winners_cup if w["anno"] == y), "-")
             winners.append(rec)
 
-        print(winners)
-
-    return render_template("hof.html", winners=winners)
+        return render_template("hof.html", winners=winners)
 
     return "Albo d'oro non disponibile"
 
