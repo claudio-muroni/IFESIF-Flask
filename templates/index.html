@@ -16,7 +16,6 @@
     </div>
 
     <div class="ioSoBraBOT">
-        <h2>(WORK IN PROGRESS)</h2>
         <h3>Chiedi a chi ce capisce:</h3>
         <input id="ioSoBraBOT_input" type="text" />
         <button onclick="send()">Spara</button>
@@ -24,6 +23,7 @@
 
         <script>
             async function send() {
+                document.getElementById("ioSoBraBOT_output").textContent = "Damme un attimo che ce penso...";
                 const res = await fetch("/ioSoBraBOT", {
                     method: "POST",
                     headers: { "Content-Type": "text/plain" },

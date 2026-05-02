@@ -131,17 +131,19 @@ input {
   border-radius: 2rem;
   font-family: "Afacad", sans-serif;
   font-size: 1.5rem;
+  padding: 0.5rem;
 }
 
 button {
   font-family: "Afacad", sans-serif;
-  font-size: 1.5rem;
+  font-size: 2rem;
   border-radius: 0.5rem;
   background-color: #050133;
   color: white;
   border: solid;
+  cursor: pointer;
 }
 
 #ioSoBraBOT_output {
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
