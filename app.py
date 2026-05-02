@@ -1,9 +1,13 @@
 from flask import Flask, render_template, request
 import requests
 from operator import itemgetter
-from groq import Groq
 
 import settings
+
+import groq
+from groq import Groq
+
+
 
 app = Flask(__name__)
 
@@ -32,24 +36,27 @@ def index():
 @app.route("/ioSoBraBOT", methods=["POST"])
 def ioSoBraBOT():
     text = request.get_data(as_text=True)
-  
-    client = Groq(api_key=settings.GROK_KEY)
+    
+    try:
+        client = Groq(api_key=settings.GROK_KEY)
 
-    chat_completion = client.chat.completions.create(
-        messages=[
-            {
-                "role": "system",
-                "content": settings.LLM_PROMPT
-            },
-            {
-                "role": "user",
-                "content": text
-            }
-        ],
-        model="groq/compound",
-    )
+        chat_completion = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "system",
+                    "content": settings.LLM_PROMPT
+                },
+                {
+                    "role": "user",
+                    "content": text
+                }
+            ],
+            model="groq/compound",
+        )
+        return chat_completion.choices[0].message.content
+    except groq.APIError as e:
+        return "Riprovace, mesà che stavo a dormi'"
 
-    return chat_completion.choices[0].message.content
 
 # the pres page retrieves data from DB only if needed
 @app.route('/pres')
