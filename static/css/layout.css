@@ -141,3 +141,7 @@ button {
   color: white;
   border: solid;
 }
+
+#ioSoBraBOT_output {
+  font-size: 1.5rem;
+}
