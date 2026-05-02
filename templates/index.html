@@ -17,6 +17,21 @@
 
     <div class="ioSoBraBOT">
         <h2>(WORK IN PROGRESS)</h2>
+        <h3>Chiedi a chi ce capisce:</h3>
+        <input id="ioSoBraBOT_input" type="text" />
+        <button onclick="send()">Spara</button>
+        <p id="ioSoBraBOT_output"></p>
+
+        <script>
+            async function send() {
+                const res = await fetch("/ioSoBraBOT", {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain" },
+                    body: document.getElementById("ioSoBraBOT_input").value
+                });
+                document.getElementById("ioSoBraBOT_output").textContent = await res.text();
+            }
+        </script>
     </div>
 
     <div class="pages">

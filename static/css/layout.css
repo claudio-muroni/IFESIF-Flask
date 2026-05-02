@@ -116,10 +116,28 @@ footer
   text-align:center;
 }
 
-p.cookies
+p.banner
 {
   text-align:center;
   font-size: 1.5rem;
   text-decoration: underline;
   margin-bottom: 5rem;
+}
+
+input {
+  width: 60%;
+  border: solid;
+  border-width: 0.25rem;
+  border-radius: 2rem;
+  font-family: "Afacad", sans-serif;
+  font-size: 1.5rem;
+}
+
+button {
+  font-family: "Afacad", sans-serif;
+  font-size: 1.5rem;
+  border-radius: 0.5rem;
+  background-color: #050133;
+  color: white;
+  border: solid;
 }
