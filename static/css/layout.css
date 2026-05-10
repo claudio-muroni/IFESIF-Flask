@@ -33,6 +33,7 @@ div.titles
   flex-direction: column;
   text-align:center;
   gap: 0rem;
+  font-weight: bold;
 }
 
 div.presidents, div.ifesif-video, div.pages, div.ioSoBraBOT
@@ -109,11 +110,18 @@ td
 {
   border-width: 0.075rem;
   font-size: 1.5rem;
+  font-weight: bold;
+}
+
+td.ranking_pos
+{
+  text-align:center;
 }
 
 footer
 {
   text-align:center;
+  font-weight: bold;
 }
 
 p.banner

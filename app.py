@@ -142,7 +142,7 @@ def history_8p():
             ranking_table = []
             for p in range(1,8+1):
                 rec = {}
-                rec["stagione"] = str(y-1) + "/" + str(y)[2:4]
+                rec["stagione"] = str(y-1)[2:4] + "/" + str(y)[2:4]
                 rec["pos"] = p
                 rec["points_league"] = str(next((rl["punti"] for rl in rankings_league if rl["anno"] == y and rl["posizione"] == p), "-")).replace("None", "-")
                 rec["pres_league"] = next((rl["nome_presidente"]+" "+rl["cognome_presidente"][:1]+"."for rl in rankings_league if rl["anno"] == y and rl["posizione"] == p), "-")

@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 {% extends "layout.html" %} {% block body %}
 
+    <div class="titles">
+        <h2>Storico 8 partecipanti</h2>
+    </div>
+
     {% for rt in rankings_tables %}
         <div>
             <table>
@@ -13,7 +17,7 @@
                 </tr>
                 {% for r in rt %}
                     <tr>
-                        <td>{{ r["pos"] }}</td>
+                        <td class="ranking_pos">{{ r["pos"] }}</td>
                         <td>{{ r["points_league"] }}</td>
                         <td>{{ r["pres_league"] }}</td>
                         <td>{{ r["points_cup"] }}</td>
