@@ -118,5 +118,49 @@ def hall_of_fame():
 
     return "Albo d'oro non disponibile"
 
+
+@app.route('/history8p')
+def history_8p():
+
+    response = requests.get(settings.DB_URL+"/rest/v1/classifiche?apikey="+settings.DB_KEY)
+    if response.status_code == 200:
+        result = response.json()
+
+        rankings_league = [c for c in result if c["competizione"] == "Campionato" and c["anno"] >= 2023]
+        rankings_cup = [c for c in result if c["competizione"] == "Coppa" and c["anno"] >= 2023]
+
+        rankings_league = sorted(rankings_league, key=itemgetter('posizione'))
+        rankings_league = sorted(rankings_league, key=itemgetter('anno'), reverse=True)
+        rankings_cup = sorted(rankings_cup, key=itemgetter('posizione'))
+        rankings_cup = sorted(rankings_cup, key=itemgetter('anno'), reverse=True)
+
+        rankings_tables = []
+        last_year = rankings_league[0]["anno"]
+        first_year = rankings_league[-1]["anno"]
+        for y in range(last_year, first_year-1, -1):
+
+            ranking_table = []
+            for p in range(1,8+1):
+                rec = {}
+                rec["stagione"] = str(y-1) + "/" + str(y)[2:4]
+                rec["pos"] = p
+                rec["points_league"] = str(next((rl["punti"] for rl in rankings_league if rl["anno"] == y and rl["posizione"] == p), "-")).replace("None", "-")
+                rec["pres_league"] = next((rl["nome_presidente"]+" "+rl["cognome_presidente"][:1]+"."for rl in rankings_league if rl["anno"] == y and rl["posizione"] == p), "-")
+                rec["points_cup"] = str(next((rl["punti"] for rl in rankings_cup if rl["anno"] == y and rl["posizione"] == p), "-")).replace("None", "-")
+                rec["pres_cup"] = next((rl["nome_presidente"]+" "+rl["cognome_presidente"][:1]+"."for rl in rankings_cup if rl["anno"] == y and rl["posizione"] == p), "-")
+
+                ranking_table.append(rec)
+
+            rankings_tables.append(ranking_table)
+
+        print(rankings_tables)
+        return render_template("history8p.html", rankings_tables=rankings_tables)
+
+    return "Storico 8p non disponibile"
+
+
+
+
+
 if __name__ == "__main__":
     app.run()

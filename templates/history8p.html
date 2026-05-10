@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% extends "layout.html" %} {% block body %}
+
+    {% for rt in rankings_tables %}
+        <div>
+            <table>
+                <tr>
+                    <th>{{ rt[0]["stagione"] }}</th>
+                    <th>p.</th>
+                    <th>Campionato</th>
+                    <th>p.</th>
+                    <th>Coppa</th>
+                </tr>
+                {% for r in rt %}
+                    <tr>
+                        <td>{{ r["pos"] }}</td>
+                        <td>{{ r["points_league"] }}</td>
+                        <td>{{ r["pres_league"] }}</td>
+                        <td>{{ r["points_cup"] }}</td>
+                        <td>{{ r["pres_cup"] }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% endfor %}
+
+    <footer>
+        <a href="/">Home</a>
+    </footer>
+
+{% endblock %}
