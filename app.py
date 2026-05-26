@@ -145,9 +145,9 @@ def history_8p():
                 rec["stagione"] = str(y-1)[2:4] + "/" + str(y)[2:4]
                 rec["pos"] = p
                 rec["points_league"] = str(next((rl["punti"] for rl in rankings_league if rl["anno"] == y and rl["posizione"] == p), "-")).replace("None", "-")
-                rec["pres_league"] = next((rl["nome_presidente"]+" "+rl["cognome_presidente"][:1]+"."for rl in rankings_league if rl["anno"] == y and rl["posizione"] == p), "-")
+                rec["pres_league"] = next((rl["nome_presidente"]+" "+rl["cognome_presidente"][:1]+"." for rl in rankings_league if rl["anno"] == y and rl["posizione"] == p), "-")
                 rec["points_cup"] = str(next((rl["punti"] for rl in rankings_cup if rl["anno"] == y and rl["posizione"] == p), "-")).replace("None", "-")
-                rec["pres_cup"] = next((rl["nome_presidente"]+" "+rl["cognome_presidente"][:1]+"."for rl in rankings_cup if rl["anno"] == y and rl["posizione"] == p), "-")
+                rec["pres_cup"] = next((rl["nome_presidente"]+" "+rl["cognome_presidente"][:1]+"." for rl in rankings_cup if rl["anno"] == y and rl["posizione"] == p), "-")
 
                 ranking_table.append(rec)
 
