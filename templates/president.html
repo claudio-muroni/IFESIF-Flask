@@ -13,6 +13,20 @@
     <div class="titles">
         <h2>{{name}} {{surname}}</h2>
         <h3>Budget: {{budget}} cr.</h3>
+        <table class="palmares">
+            <tr>
+                <td class="campionati">
+                    {% for n in num_league %}
+                        <img src="static/Scudetto.svg" class="campionati">
+                    {% endfor %}
+                </td>
+                <td class="coppe">
+                    {% for n in num_cup %}
+                        <img src="static/Coccarda_Coppa_Italia.svg" class="coppe">
+                    {% endfor %}
+                </td>
+            </tr>
+        </table>
     </div>
 
     <div>

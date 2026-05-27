@@ -79,6 +79,13 @@ def pres():
             result = response.json()
             all_contracts = [c for c in result]
 
+    # TODO:
+    response = requests.get(settings.DB_URL+"/rest/v1/classifiche?apikey="+settings.DB_KEY)
+    if response.status_code == 200:
+        result = response.json()
+        num_league = [c for c in result if c["posizione"] == 1 and c["competizione"] == "Campionato" and c["cognome_presidente"] == surname]
+        num_cup = [c for c in result if c["posizione"] == 1 and c["competizione"] == "Coppa" and c["cognome_presidente"] == surname]   
+
     if all_contracts != [] and presidents != []:
         contracts = [c for c in all_contracts if c["cognome_presidente"] == surname and c["nome_presidente"] == name]
         contracts = sorted(contracts, key=itemgetter('ruolo'), reverse=True)
@@ -86,7 +93,7 @@ def pres():
         budget = [p for p in presidents if p[0] == surname]
         budget = budget[0][2]
 
-        return render_template("president.html", contracts=contracts, surname=surname, name=name, budget=budget, presidents=presidents)
+        return render_template("president.html", contracts=contracts, surname=surname, name=name, budget=budget, presidents=presidents, num_league=num_league, num_cup=num_cup)
 
     return "Presidente non disponibile"
 

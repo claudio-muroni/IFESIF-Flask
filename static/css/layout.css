@@ -155,3 +155,15 @@ button {
 #ioSoBraBOT_output {
   font-size: 2rem;
 }
+
+img.campionati, img.coppe {
+  width: 2rem;
+  height: 2rem;
+}
+
+td.campionati, td.coppe {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 1rem;
+  border-style: none none none none;
+}
