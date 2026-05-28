@@ -49,6 +49,10 @@ div.presidents, div.pages
   border-radius: 2rem;
 }
 
+div.pages {
+  margin-top: 8rem;
+}
+
 ul.presidents, ul.pages
 {
   display: inline-block;

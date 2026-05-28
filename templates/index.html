@@ -1,5 +1,7 @@
 <!DOCTYPE html>
+
 {% extends "layout.html" %} {% block body %}
+    
     <div class="titles">
         <h1>"Il fanta è sempre il fanta"</h1>
         <h2>Since 2013</h2>
@@ -32,16 +34,6 @@
                 document.getElementById("ioSoBraBOT_output").textContent = await res.text();
             }
         </script>
-    </div>
-
-    <div class="pages">
-        <ul class="pages">
-            <li>
-                <h3><a href="/">Home</a></h3>
-                <h3><a href="/history8p">Storico 8p</a></h3>
-                <h3><a href="/hof">Albo</a></h3>
-            </li>
-        </ul>
     </div>
     
 {% endblock %}
