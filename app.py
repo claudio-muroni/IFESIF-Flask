@@ -13,15 +13,23 @@ app = Flask(__name__)
 
 presidents = []
 all_contracts = []
+all_rankings = []
 
 # the home page retrives always all necessary data from the DB to have lighter transitions later
 @app.route('/')
 def index():
+    
     global all_contracts
     response = requests.get(settings.DB_URL+"/rest/v1/contratti?apikey="+settings.DB_KEY)
     if response.status_code == 200:
         result = response.json()
         all_contracts = [c for c in result]
+    
+    global all_rankings
+    response = requests.get(settings.DB_URL+"/rest/v1/classifiche?apikey="+settings.DB_KEY)
+    if response.status_code == 200:
+        result = response.json()
+        all_rankings = [r for r in result]
     
     global presidents
     response = requests.get(settings.DB_URL+"/rest/v1/presidenti?apikey="+settings.DB_KEY)
@@ -79,12 +87,16 @@ def pres():
             result = response.json()
             all_contracts = [c for c in result]
 
-    # TODO:
-    response = requests.get(settings.DB_URL+"/rest/v1/classifiche?apikey="+settings.DB_KEY)
-    if response.status_code == 200:
-        result = response.json()
-        num_league = [c for c in result if c["posizione"] == 1 and c["competizione"] == "Campionato" and c["cognome_presidente"] == surname]
-        num_cup = [c for c in result if c["posizione"] == 1 and c["competizione"] == "Coppa" and c["cognome_presidente"] == surname]   
+    global all_rankings
+    if all_rankings == []:
+        response = requests.get(settings.DB_URL+"/rest/v1/classifiche?apikey="+settings.DB_KEY)
+        if response.status_code == 200:
+            result = response.json()
+            all_rankings = [r for r in result]
+
+    if all_rankings != []:
+        num_league = [r for r in all_rankings if r["posizione"] == 1 and r["competizione"] == "Campionato" and r["cognome_presidente"] == surname]
+        num_cup = [r for r in all_rankings if r["posizione"] == 1 and r["competizione"] == "Coppa" and r["cognome_presidente"] == surname]
 
     if all_contracts != [] and presidents != []:
         contracts = [c for c in all_contracts if c["cognome_presidente"] == surname and c["nome_presidente"] == name]
@@ -100,12 +112,17 @@ def pres():
 @app.route('/hof')
 def hall_of_fame():
 
-    response = requests.get(settings.DB_URL+"/rest/v1/classifiche?apikey="+settings.DB_KEY)
-    if response.status_code == 200:
-        result = response.json()
+    global all_rankings
+    if all_rankings == []:
+        response = requests.get(settings.DB_URL+"/rest/v1/classifiche?apikey="+settings.DB_KEY)
+        if response.status_code == 200:
+            result = response.json()
+            all_rankings = [r for r in result]
+
+    if all_rankings != []:
         
-        winners_league = [c for c in result if c["posizione"] == 1 and c["competizione"] == "Campionato"]
-        winners_cup = [c for c in result if c["posizione"] == 1 and c["competizione"] == "Coppa"]
+        winners_league = [r for r in all_rankings if r["posizione"] == 1 and r["competizione"] == "Campionato"]
+        winners_cup = [r for r in all_rankings if r["posizione"] == 1 and r["competizione"] == "Coppa"]
 
         winners_league = sorted(winners_league, key=itemgetter('anno'), reverse=True)
         winners_cup = sorted(winners_cup, key=itemgetter('anno'), reverse=True)
@@ -129,12 +146,17 @@ def hall_of_fame():
 @app.route('/history8p')
 def history_8p():
 
-    response = requests.get(settings.DB_URL+"/rest/v1/classifiche?apikey="+settings.DB_KEY)
-    if response.status_code == 200:
-        result = response.json()
+    global all_rankings
+    if all_rankings == []:
+        response = requests.get(settings.DB_URL+"/rest/v1/classifiche?apikey="+settings.DB_KEY)
+        if response.status_code == 200:
+            result = response.json()
+            all_rankings = [r for r in result]
 
-        rankings_league = [c for c in result if c["competizione"] == "Campionato" and c["anno"] >= 2023]
-        rankings_cup = [c for c in result if c["competizione"] == "Coppa" and c["anno"] >= 2023]
+    if all_rankings != []:
+
+        rankings_league = [r for r in all_rankings if r["competizione"] == "Campionato" and r["anno"] >= 2023]
+        rankings_cup = [r for r in all_rankings if r["competizione"] == "Coppa" and r["anno"] >= 2023]
 
         rankings_league = sorted(rankings_league, key=itemgetter('posizione'))
         rankings_league = sorted(rankings_league, key=itemgetter('anno'), reverse=True)
@@ -160,7 +182,6 @@ def history_8p():
 
             rankings_tables.append(ranking_table)
 
-        print(rankings_tables)
         return render_template("history8p.html", rankings_tables=rankings_tables)
 
     return "Storico 8p non disponibile"
