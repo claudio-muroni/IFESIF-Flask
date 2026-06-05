@@ -72,27 +72,7 @@ def pres():
     surname = request.args.get("surname")
     name = request.args.get("name")
 
-    global presidents
-    if presidents == []:
-        response = requests.get(settings.DB_URL+"/rest/v1/presidenti?apikey="+settings.DB_KEY)
-        if response.status_code == 200:
-            result = response.json()
-            presidents = [(p["cognome"],p["nome"],p["cash"]) for p in result if p["attivo"] == True]
-            presidents = sorted(presidents, key=itemgetter(1))
-
-    global all_contracts
-    if all_contracts == []:
-        response = requests.get(settings.DB_URL+"/rest/v1/contratti?apikey="+settings.DB_KEY)
-        if response.status_code == 200:
-            result = response.json()
-            all_contracts = [c for c in result]
-
-    global all_rankings
-    if all_rankings == []:
-        response = requests.get(settings.DB_URL+"/rest/v1/classifiche?apikey="+settings.DB_KEY)
-        if response.status_code == 200:
-            result = response.json()
-            all_rankings = [r for r in result]
+    check_for_data()
 
     if all_rankings != []:
         num_league = [r for r in all_rankings if r["posizione"] == 1 and r["competizione"] == "Campionato" and r["cognome_presidente"] == surname]
@@ -112,12 +92,7 @@ def pres():
 @app.route('/hof')
 def hall_of_fame():
 
-    global all_rankings
-    if all_rankings == []:
-        response = requests.get(settings.DB_URL+"/rest/v1/classifiche?apikey="+settings.DB_KEY)
-        if response.status_code == 200:
-            result = response.json()
-            all_rankings = [r for r in result]
+    check_for_data()
 
     if all_rankings != []:
         
@@ -138,7 +113,7 @@ def hall_of_fame():
             rec["Coppa"] = next((w["nome_presidente"]+" "+w["cognome_presidente"][:1]+"." for w in winners_cup if w["anno"] == y), "-")
             winners.append(rec)
 
-        return render_template("hof.html", winners=winners)
+        return render_template("hof.html", presidents=presidents, winners=winners)
 
     return "Albo d'oro non disponibile"
 
@@ -146,12 +121,7 @@ def hall_of_fame():
 @app.route('/history8p')
 def history_8p():
 
-    global all_rankings
-    if all_rankings == []:
-        response = requests.get(settings.DB_URL+"/rest/v1/classifiche?apikey="+settings.DB_KEY)
-        if response.status_code == 200:
-            result = response.json()
-            all_rankings = [r for r in result]
+    check_for_data()
 
     if all_rankings != []:
 
@@ -182,12 +152,33 @@ def history_8p():
 
             rankings_tables.append(ranking_table)
 
-        return render_template("history8p.html", rankings_tables=rankings_tables)
+        return render_template("history8p.html", presidents=presidents, rankings_tables=rankings_tables)
 
     return "Storico 8p non disponibile"
 
 
+def check_for_data():
+    global presidents
+    if presidents == []:
+        response = requests.get(settings.DB_URL+"/rest/v1/presidenti?apikey="+settings.DB_KEY)
+        if response.status_code == 200:
+            result = response.json()
+            presidents = [(p["cognome"],p["nome"],p["cash"]) for p in result if p["attivo"] == True]
+            presidents = sorted(presidents, key=itemgetter(1))
 
+    global all_contracts
+    if all_contracts == []:
+        response = requests.get(settings.DB_URL+"/rest/v1/contratti?apikey="+settings.DB_KEY)
+        if response.status_code == 200:
+            result = response.json()
+            all_contracts = [c for c in result]
+
+    global all_rankings
+    if all_rankings == []:
+        response = requests.get(settings.DB_URL+"/rest/v1/classifiche?apikey="+settings.DB_KEY)
+        if response.status_code == 200:
+            result = response.json()
+            all_rankings = [r for r in result]
 
 
 if __name__ == "__main__":
