@@ -16,7 +16,9 @@ idna==3.10
 itsdangerous==2.2.0
 Jinja2==3.1.6
 MarkupSafe==3.0.2
+numpy==2.4.6
 packaging==25.0
+pandas==3.0.3
 pydantic==2.13.3
 pydantic_core==2.46.3
 python-dateutil==2.9.0.post0

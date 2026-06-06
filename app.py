@@ -7,37 +7,24 @@ import settings
 import groq
 from groq import Groq
 
-
+import pandas as pd
 
 app = Flask(__name__)
 
 presidents = []
 all_contracts = []
+all_contracts_csv = ""
 all_rankings = []
+all_rankings_csv = ""
 
 # the home page retrives always all necessary data from the DB to have lighter transitions later
 @app.route('/')
 def index():
     
-    global all_contracts
-    response = requests.get(settings.DB_URL+"/rest/v1/contratti?apikey="+settings.DB_KEY)
-    if response.status_code == 200:
-        result = response.json()
-        all_contracts = [c for c in result]
-    
-    global all_rankings
-    response = requests.get(settings.DB_URL+"/rest/v1/classifiche?apikey="+settings.DB_KEY)
-    if response.status_code == 200:
-        result = response.json()
-        all_rankings = [r for r in result]
-    
-    global presidents
-    response = requests.get(settings.DB_URL+"/rest/v1/presidenti?apikey="+settings.DB_KEY)
-    if response.status_code == 200:
-            result = response.json()
-            presidents = [(p["cognome"],p["nome"],p["cash"]) for p in result if p["attivo"] == True]
-            presidents = sorted(presidents, key=itemgetter(1))
-            return render_template("index.html", presidents=presidents)
+    check_for_data()
+
+    if presidents != []:
+        return render_template("index.html", presidents=presidents)
 
     return "IFESIF"
 
@@ -50,20 +37,16 @@ def ioSoBraBOT():
 
         chat_completion = client.chat.completions.create(
             messages=[
-                {
-                    "role": "system",
-                    "content": settings.LLM_PROMPT
-                },
-                {
-                    "role": "user",
-                    "content": text
-                }
+                {"role": "system", "content": settings.LLM_PROMPT + "\nPosizionamenti in classifica:\n" + str(all_rankings_csv)+ "\n\nGiocatori sotto contratto:\n" + str(all_contracts_csv)},
+                {"role": "user", "content": text}
             ],
-            model="groq/compound",
+            model="groq/compound-mini"
         )
         return chat_completion.choices[0].message.content
+    
     except groq.APIError as e:
-        return "Riprovace, mesà che stavo a dormi'"
+        print("Exception IoSoBraBot:" + str(e))
+        return "Ao con calma, famme riposa' un attimo"
 
 
 # the pres page retrieves data from DB only if needed
@@ -167,18 +150,27 @@ def check_for_data():
             presidents = sorted(presidents, key=itemgetter(1))
 
     global all_contracts
+    global all_contracts_csv
     if all_contracts == []:
         response = requests.get(settings.DB_URL+"/rest/v1/contratti?apikey="+settings.DB_KEY)
         if response.status_code == 200:
             result = response.json()
-            all_contracts = [c for c in result]
+            all_contracts = [{k: v for k, v in c.items() if k not in ("id", "id_stagione", "id_presidente")} for c in result]
+            all_contracts = sorted(all_contracts, key=itemgetter('ruolo'))
+            all_contracts = sorted(all_contracts, key=itemgetter('cognome_presidente'))
+            all_contracts_csv = pd.DataFrame(all_contracts).to_csv(index=False)
 
     global all_rankings
+    global all_rankings_csv
     if all_rankings == []:
         response = requests.get(settings.DB_URL+"/rest/v1/classifiche?apikey="+settings.DB_KEY)
         if response.status_code == 200:
             result = response.json()
-            all_rankings = [r for r in result]
+            all_rankings = [{k: v for k, v in r.items() if k not in ("id", "id_stagione", "id_presidente")} for r in result]
+            all_rankings = sorted(all_rankings, key=itemgetter('posizione'))
+            all_rankings = sorted(all_rankings, key=itemgetter('competizione'))
+            all_rankings = sorted(all_rankings, key=itemgetter('anno'), reverse=True)
+            all_rankings_csv = pd.DataFrame(all_rankings).to_csv(index=False)
 
 
 if __name__ == "__main__":
