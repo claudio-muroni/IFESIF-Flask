@@ -44,8 +44,10 @@ def ioSoBraBOT():
         )
         return chat_completion.choices[0].message.content
     
-    except groq.APIError as e:
+    #except groq.APIError as e:
+    except Exception as e:
         print("Exception IoSoBraBot:" + str(e))
+        print("Exception headers:", dict(e.response.headers))
         return "Ao con calma, famme riposa' un attimo"
 
 
