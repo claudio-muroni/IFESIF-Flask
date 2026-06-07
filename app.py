@@ -21,7 +21,7 @@ all_rankings_csv = ""
 @app.route('/')
 def index():
     
-    check_for_data()
+    check_for_data(update_data=True)
 
     if presidents != []:
         return render_template("index.html", presidents=presidents)
@@ -40,7 +40,7 @@ def ioSoBraBOT():
                 {"role": "system", "content": settings.LLM_PROMPT + "\nPosizionamenti in classifica:\n" + str(all_rankings_csv)+ "\n\nGiocatori sotto contratto:\n" + str(all_contracts_csv)},
                 {"role": "user", "content": text}
             ],
-            model="groq/compound-mini"
+            model="llama-3.3-70b-versatile"
         )
         return chat_completion.choices[0].message.content
     
@@ -140,9 +140,9 @@ def history_8p():
     return "Storico 8p non disponibile"
 
 
-def check_for_data():
+def check_for_data(update_data=False):
     global presidents
-    if presidents == []:
+    if presidents == [] or update_data == True:
         response = requests.get(settings.DB_URL+"/rest/v1/presidenti?apikey="+settings.DB_KEY)
         if response.status_code == 200:
             result = response.json()
@@ -151,18 +151,18 @@ def check_for_data():
 
     global all_contracts
     global all_contracts_csv
-    if all_contracts == []:
+    if all_contracts == [] or update_data == True:
         response = requests.get(settings.DB_URL+"/rest/v1/contratti?apikey="+settings.DB_KEY)
         if response.status_code == 200:
             result = response.json()
             all_contracts = [{k: v for k, v in c.items() if k not in ("id", "id_stagione", "id_presidente")} for c in result]
-            all_contracts = sorted(all_contracts, key=itemgetter('ruolo'))
+            all_contracts = sorted(all_contracts, key=itemgetter('ruolo'), reverse=True)
             all_contracts = sorted(all_contracts, key=itemgetter('cognome_presidente'))
             all_contracts_csv = pd.DataFrame(all_contracts).to_csv(index=False)
 
     global all_rankings
     global all_rankings_csv
-    if all_rankings == []:
+    if all_rankings == [] or update_data == True:
         response = requests.get(settings.DB_URL+"/rest/v1/classifiche?apikey="+settings.DB_KEY)
         if response.status_code == 200:
             result = response.json()
