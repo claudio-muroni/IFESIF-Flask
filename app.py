@@ -40,7 +40,7 @@ def ioSoBraBOT():
                 {"role": "system", "content": settings.LLM_PROMPT + "\nPosizionamenti in classifica:\n" + str(all_rankings_csv)+ "\n\nGiocatori sotto contratto:\n" + str(all_contracts_csv)},
                 {"role": "user", "content": text}
             ],
-            model="llama-3.3-70b-versatile"
+            model="groq/compound-mini"
         )
         return chat_completion.choices[0].message.content
     
